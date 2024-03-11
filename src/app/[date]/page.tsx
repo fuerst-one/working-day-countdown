@@ -2,6 +2,8 @@
 
 import dayjs from "dayjs";
 import { LegalLinks } from "../../components/LegalLinks";
+import { useEffect } from "react";
+import { writeFavicon } from "./writeFavicon";
 
 export default function Date({
   params: { date },
@@ -10,14 +12,6 @@ export default function Date({
 }) {
   const targetDate = dayjs(date, "YYYY-MM-DD");
 
-  if (targetDate.isBefore(dayjs())) {
-    return (
-      <main className="flex min-h-screen flex-col items-center justify-center gap-8 p-24">
-        <h1 className="text-6xl font-bold">You made it</h1>
-      </main>
-    );
-  }
-  
   let workingDaysLeft = 0;
   let currentDate = dayjs();
   while (currentDate.isBefore(targetDate)) {
@@ -25,6 +19,23 @@ export default function Date({
       workingDaysLeft++;
     }
     currentDate = dayjs(currentDate).add(1, "day");
+  }
+
+  useEffect(() => {
+    writeFavicon(workingDaysLeft.toString());
+    const timeout = setTimeout(() => {
+      window.location.reload();
+    }, 1000 * 60 * 60); // every hour
+    return () => clearTimeout(timeout);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (workingDaysLeft === 0) {
+    return (
+      <main className="flex min-h-screen flex-col items-center justify-center gap-8 p-24">
+        <h1 className="text-6xl font-bold">You made it</h1>
+      </main>
+    );
   }
 
   return (
