@@ -1,5 +1,5 @@
 export const writeFavicon = (text: string) => {
-  const favicon = document.querySelector("link[rel=\"icon\"]") as HTMLLinkElement;
+  const favicon = document.querySelector('link[rel="icon"]') as HTMLLinkElement;
   if (!favicon) {
     return;
   }
