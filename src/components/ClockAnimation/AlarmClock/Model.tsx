@@ -9,11 +9,6 @@ import { GLTF } from "three-stdlib";
 
 type GLTFResult = GLTF & {
   nodes: {
-    Cube001: THREE.Mesh;
-    Cube001_1: THREE.Mesh;
-    Cube001_2: THREE.Mesh;
-    Cube001_3: THREE.Mesh;
-    Cube001_4: THREE.Mesh;
     ["12"]: THREE.Mesh;
     ["11"]: THREE.Mesh;
     ["10"]: THREE.Mesh;
@@ -26,359 +21,225 @@ type GLTFResult = GLTF & {
     ["3"]: THREE.Mesh;
     ["2"]: THREE.Mesh;
     ["1"]: THREE.Mesh;
-    lines: THREE.Mesh;
-    Cylinder003: THREE.Mesh;
-    Cylinder: THREE.Mesh;
-    Cylinder001: THREE.Mesh;
-    Cylinder005: THREE.Mesh;
-    Cylinder006: THREE.Mesh;
-    Cylinder007: THREE.Mesh;
-    Cylinder008: THREE.Mesh;
-    Cylinder009: THREE.Mesh;
-    Cylinder010: THREE.Mesh;
-    Cylinder011: THREE.Mesh;
-    Cylinder002: THREE.Mesh;
-    Cylinder004: THREE.Mesh;
+    Cylinder027: THREE.Mesh;
+    Cylinder027_1: THREE.Mesh;
+    Cylinder027_2: THREE.Mesh;
+    Cylinder027_3: THREE.Mesh;
+    Cylinder027_4: THREE.Mesh;
+    Cylinder027_5: THREE.Mesh;
+    Cylinder027_6: THREE.Mesh;
+    Cylinder027_7: THREE.Mesh;
   };
   materials: {
+    ["Material.009"]: THREE.MeshStandardMaterial;
+    ["Material.001"]: THREE.MeshPhysicalMaterial;
+    ["Material.010"]: THREE.MeshStandardMaterial;
+    ["Material.004"]: THREE.MeshPhysicalMaterial;
     ["Material.003"]: THREE.MeshStandardMaterial;
     ["Material.006"]: THREE.MeshStandardMaterial;
     ["Material.007"]: THREE.MeshStandardMaterial;
     ["Material.005"]: THREE.MeshStandardMaterial;
     ["Material.011"]: THREE.MeshStandardMaterial;
-    ["Material.009"]: THREE.MeshStandardMaterial;
-    ["Material.001"]: THREE.MeshPhysicalMaterial;
-    ["Material.010"]: THREE.MeshStandardMaterial;
-    ["Material.004"]: THREE.MeshPhysicalMaterial;
   };
 };
 
 export function Model(
-  props: JSX.IntrinsicElements["group"] & { modelRef?: RefObject<THREE.Group> },
+  props: JSX.IntrinsicElements["group"] & {
+    modelRef?: RefObject<THREE.Group>;
+    material?: THREE.Material;
+  }
 ) {
-  const { nodes, materials } = useGLTF("/assets/obj/clock.glb") as GLTFResult;
+  const material = props.material;
+  const { nodes, materials } = useGLTF("/assets/obj/clock_joined.glb") as GLTFResult;
   return (
     <group {...props} ref={props.modelRef} dispose={null}>
-      <group
-        name="seconds_niddle"
-        position={[-0.14519, -0.54362, 0.25476]}
-        rotation={[-0.14449, 0, 2.63772]}
-        scale={[0.00426, 0.29427, -0.00298]}
-        userData={{ name: "seconds niddle" }}
-      >
+      <group name="Scene">
         <mesh
-          name="Cube001"
+          name="12"
           castShadow
           receiveShadow
-          geometry={nodes.Cube001.geometry}
-          material={materials["Material.003"]}
+          geometry={nodes["12"].geometry}
+          material={material ?? materials["Material.009"]}
+          position={[-0.076, 1.264, 0.146]}
+          rotation={[1.426, 0, 0]}
+          scale={0.192}
         />
         <mesh
-          name="Cube001_1"
+          name="11"
           castShadow
           receiveShadow
-          geometry={nodes.Cube001_1.geometry}
-          material={materials["Material.006"]}
+          geometry={nodes["11"].geometry}
+          material={material ?? materials["Material.009"]}
+          position={[-0.357, 1.191, 0.156]}
+          rotation={[1.426, 0, 0]}
+          scale={0.192}
         />
         <mesh
-          name="Cube001_2"
+          name="10"
           castShadow
           receiveShadow
-          geometry={nodes.Cube001_2.geometry}
-          material={materials["Material.007"]}
+          geometry={nodes["10"].geometry}
+          material={material ?? materials["Material.009"]}
+          position={[-0.551, 1.006, 0.183]}
+          rotation={[1.426, 0, 0]}
+          scale={0.192}
         />
         <mesh
-          name="Cube001_3"
+          name="9"
           castShadow
           receiveShadow
-          geometry={nodes.Cube001_3.geometry}
-          material={materials["Material.005"]}
+          geometry={nodes["9"].geometry}
+          material={material ?? materials["Material.009"]}
+          position={[-0.586, 0.738, 0.222]}
+          rotation={[1.426, 0, 0]}
+          scale={0.192}
         />
         <mesh
-          name="Cube001_4"
+          name="8"
           castShadow
           receiveShadow
-          geometry={nodes.Cube001_4.geometry}
-          material={materials["Material.011"]}
+          geometry={nodes["8"].geometry}
+          material={material ?? materials["Material.009"]}
+          position={[-0.516, 0.468, 0.261]}
+          rotation={[1.426, 0, 0]}
+          scale={0.192}
         />
+        <mesh
+          name="7"
+          castShadow
+          receiveShadow
+          geometry={nodes["7"].geometry}
+          material={material ?? materials["Material.009"]}
+          position={[-0.311, 0.271, 0.29]}
+          rotation={[1.426, 0, 0]}
+          scale={0.192}
+        />
+        <mesh
+          name="6"
+          castShadow
+          receiveShadow
+          geometry={nodes["6"].geometry}
+          material={material ?? materials["Material.009"]}
+          position={[-0.044, 0.19, 0.302]}
+          rotation={[1.426, 0, 0]}
+          scale={0.192}
+        />
+        <mesh
+          name="5"
+          castShadow
+          receiveShadow
+          geometry={nodes["5"].geometry}
+          material={material ?? materials["Material.009"]}
+          position={[0.239, 0.271, 0.29]}
+          rotation={[1.426, 0, 0]}
+          scale={0.192}
+        />
+        <mesh
+          name="4"
+          castShadow
+          receiveShadow
+          geometry={nodes["4"].geometry}
+          material={material ?? materials["Material.009"]}
+          position={[0.432, 0.465, 0.262]}
+          rotation={[1.426, 0, 0]}
+          scale={0.192}
+        />
+        <mesh
+          name="3"
+          castShadow
+          receiveShadow
+          geometry={nodes["3"].geometry}
+          material={material ?? materials["Material.009"]}
+          position={[0.501, 0.738, 0.222]}
+          rotation={[1.426, 0, 0]}
+          scale={0.192}
+        />
+        <mesh
+          name="2"
+          castShadow
+          receiveShadow
+          geometry={nodes["2"].geometry}
+          material={material ?? materials["Material.009"]}
+          position={[0.435, 1.009, 0.183]}
+          rotation={[1.426, 0, 0]}
+          scale={0.192}
+        />
+        <mesh
+          name="1"
+          castShadow
+          receiveShadow
+          geometry={nodes["1"].geometry}
+          material={material ?? materials["Material.009"]}
+          position={[0.231, 1.193, 0.156]}
+          rotation={[1.426, 0, 0]}
+          scale={0.192}
+        />
+        <group
+          name="Cylinder011"
+          position={[0.458, 2.313, -0.111]}
+          rotation={[1.426, 0, Math.PI / 2]}
+          scale={[0.027, 0.454, 0.027]}
+        >
+          <mesh
+            name="Cylinder027"
+            castShadow
+            receiveShadow
+            geometry={nodes.Cylinder027.geometry}
+            material={material ?? materials["Material.001"]}
+          />
+          <mesh
+            name="Cylinder027_1"
+            castShadow
+            receiveShadow
+            geometry={nodes.Cylinder027_1.geometry}
+            material={material ?? materials["Material.010"]}
+          />
+          <mesh
+            name="Cylinder027_2"
+            castShadow
+            receiveShadow
+            geometry={nodes.Cylinder027_2.geometry}
+            material={material ?? materials["Material.004"]}
+          />
+          <mesh
+            name="Cylinder027_3"
+            castShadow
+            receiveShadow
+            geometry={nodes.Cylinder027_3.geometry}
+            material={material ?? materials["Material.003"]}
+          />
+          <mesh
+            name="Cylinder027_4"
+            castShadow
+            receiveShadow
+            geometry={nodes.Cylinder027_4.geometry}
+            material={material ?? materials["Material.006"]}
+          />
+          <mesh
+            name="Cylinder027_5"
+            castShadow
+            receiveShadow
+            geometry={nodes.Cylinder027_5.geometry}
+            material={material ?? materials["Material.007"]}
+          />
+          <mesh
+            name="Cylinder027_6"
+            castShadow
+            receiveShadow
+            geometry={nodes.Cylinder027_6.geometry}
+            material={material ?? materials["Material.005"]}
+          />
+          <mesh
+            name="Cylinder027_7"
+            castShadow
+            receiveShadow
+            geometry={nodes.Cylinder027_7.geometry}
+            material={material ?? materials["Material.011"]}
+          />
+        </group>
       </group>
-      <mesh
-        name="12"
-        castShadow
-        receiveShadow
-        geometry={nodes["12"].geometry}
-        material={materials["Material.009"]}
-        position={[-0.07621, 0.20067, 0.14559]}
-        rotation={[1.42631, 0, 0]}
-        scale={0.19164}
-        userData={{ name: "12" }}
-      />
-      <mesh
-        name="11"
-        castShadow
-        receiveShadow
-        geometry={nodes["11"].geometry}
-        material={materials["Material.009"]}
-        position={[-0.3571, 0.12725, 0.15627]}
-        rotation={[1.42631, 0, 0]}
-        scale={0.19164}
-        userData={{ name: "11" }}
-      />
-      <mesh
-        name="10"
-        castShadow
-        receiveShadow
-        geometry={nodes["10"].geometry}
-        material={materials["Material.009"]}
-        position={[-0.55108, -0.05736, 0.18313]}
-        rotation={[1.42631, 0, 0]}
-        scale={0.19164}
-        userData={{ name: "10" }}
-      />
-      <mesh
-        name="9"
-        castShadow
-        receiveShadow
-        geometry={nodes["9"].geometry}
-        material={materials["Material.009"]}
-        position={[-0.58605, -0.32589, 0.22221]}
-        rotation={[1.42631, 0, 0]}
-        scale={0.19164}
-        userData={{ name: "9" }}
-      />
-      <mesh
-        name="8"
-        castShadow
-        receiveShadow
-        geometry={nodes["8"].geometry}
-        material={materials["Material.009"]}
-        position={[-0.51554, -0.59553, 0.26144]}
-        rotation={[1.42631, 0, 0]}
-        scale={0.19164}
-        userData={{ name: "8" }}
-      />
-      <mesh
-        name="7"
-        castShadow
-        receiveShadow
-        geometry={nodes["7"].geometry}
-        material={materials["Material.009"]}
-        position={[-0.31149, -0.7922, 0.29006]}
-        rotation={[1.42631, 0, 0]}
-        scale={0.19164}
-        userData={{ name: "7" }}
-      />
-      <mesh
-        name="6"
-        castShadow
-        receiveShadow
-        geometry={nodes["6"].geometry}
-        material={materials["Material.009"]}
-        position={[-0.04385, -0.87349, 0.30188]}
-        rotation={[1.42631, 0, 0]}
-        scale={0.19164}
-        userData={{ name: "6" }}
-      />
-      <mesh
-        name="5"
-        castShadow
-        receiveShadow
-        geometry={nodes["5"].geometry}
-        material={materials["Material.009"]}
-        position={[0.23853, -0.79294, 0.29016]}
-        rotation={[1.42631, 0, 0]}
-        scale={0.19164}
-        userData={{ name: "5" }}
-      />
-      <mesh
-        name="4"
-        castShadow
-        receiveShadow
-        geometry={nodes["4"].geometry}
-        material={materials["Material.009"]}
-        position={[0.43208, -0.59809, 0.26181]}
-        rotation={[1.42631, 0, 0]}
-        scale={0.19164}
-        userData={{ name: "4" }}
-      />
-      <mesh
-        name="3"
-        castShadow
-        receiveShadow
-        geometry={nodes["3"].geometry}
-        material={materials["Material.009"]}
-        position={[0.50078, -0.32536, 0.22213]}
-        rotation={[1.42631, 0, 0]}
-        scale={0.19164}
-        userData={{ name: "3" }}
-      />
-      <mesh
-        name="2"
-        castShadow
-        receiveShadow
-        geometry={nodes["2"].geometry}
-        material={materials["Material.009"]}
-        position={[0.43453, -0.05439, 0.1827]}
-        rotation={[1.42631, 0, 0]}
-        scale={0.19164}
-        userData={{ name: "2" }}
-      />
-      <mesh
-        name="1"
-        castShadow
-        receiveShadow
-        geometry={nodes["1"].geometry}
-        material={materials["Material.009"]}
-        position={[0.23102, 0.12917, 0.15599]}
-        rotation={[1.42631, 0, 0]}
-        scale={0.19164}
-        userData={{ name: "1" }}
-      />
-      <mesh
-        name="lines"
-        castShadow
-        receiveShadow
-        geometry={nodes.lines.geometry}
-        material={materials["Material.005"]}
-        position={[0.00792, 0.10563, 0.14603]}
-        rotation={[2.9971, 0, 1.56983]}
-        scale={[0.02298, 0.00541, 0.00367]}
-        userData={{ name: "lines" }}
-      />
-      <mesh
-        name="Cylinder003"
-        castShadow
-        receiveShadow
-        geometry={nodes.Cylinder003.geometry}
-        material={materials["Material.001"]}
-        position={[0.4584, 1.24975, -0.11123]}
-        rotation={[1.42631, 0, Math.PI / 2]}
-        scale={[0.02726, 0.45404, 0.02726]}
-        userData={{ name: "Cylinder.003" }}
-      />
-      <mesh
-        name="Cylinder"
-        castShadow
-        receiveShadow
-        geometry={nodes.Cylinder.geometry}
-        material={nodes.Cylinder.material}
-        position={[-0.3921, -1.01021, 0.32301]}
-        rotation={[-0.08376, 0.22807, -0.55561]}
-        scale={0.04935}
-        userData={{ name: "Cylinder" }}
-      />
-      <mesh
-        name="Cylinder001"
-        castShadow
-        receiveShadow
-        geometry={nodes.Cylinder001.geometry}
-        material={nodes.Cylinder001.material}
-        position={[0.40159, -1.0065, 0.32301]}
-        rotation={[-0.23684, 0.05357, 0.44133]}
-        scale={0.04935}
-        userData={{ name: "Cylinder.001" }}
-      />
-      <mesh
-        name="Cylinder005"
-        castShadow
-        receiveShadow
-        geometry={nodes.Cylinder005.geometry}
-        material={materials["Material.001"]}
-        position={[0.4584, 1.24975, -0.11123]}
-        rotation={[1.42631, 0, Math.PI / 2]}
-        scale={[0.02726, 0.45404, 0.02726]}
-        userData={{ name: "Cylinder.005" }}
-      />
-      <mesh
-        name="Cylinder006"
-        castShadow
-        receiveShadow
-        geometry={nodes.Cylinder006.geometry}
-        material={materials["Material.001"]}
-        position={[0.4584, 1.24975, -0.11123]}
-        rotation={[1.42631, 0, Math.PI / 2]}
-        scale={[0.02726, 0.45404, 0.02726]}
-        userData={{ name: "Cylinder.006" }}
-      />
-      <mesh
-        name="Cylinder007"
-        castShadow
-        receiveShadow
-        geometry={nodes.Cylinder007.geometry}
-        material={materials["Material.001"]}
-        position={[0.4584, 1.24975, -0.11123]}
-        rotation={[1.42631, 0, Math.PI / 2]}
-        scale={[0.02726, 0.45404, 0.02726]}
-        userData={{ name: "Cylinder.007" }}
-      />
-      <mesh
-        name="Cylinder008"
-        castShadow
-        receiveShadow
-        geometry={nodes.Cylinder008.geometry}
-        material={materials["Material.001"]}
-        position={[0.4584, 1.24975, -0.11123]}
-        rotation={[1.42631, 0, Math.PI / 2]}
-        scale={[0.02726, 0.45404, 0.02726]}
-        userData={{ name: "Cylinder.008" }}
-      />
-      <mesh
-        name="Cylinder009"
-        castShadow
-        receiveShadow
-        geometry={nodes.Cylinder009.geometry}
-        material={materials["Material.001"]}
-        position={[0.4584, 1.24975, -0.11123]}
-        rotation={[1.42631, 0, Math.PI / 2]}
-        scale={[0.02726, 0.45404, 0.02726]}
-        userData={{ name: "Cylinder.009" }}
-      />
-      <mesh
-        name="Cylinder010"
-        castShadow
-        receiveShadow
-        geometry={nodes.Cylinder010.geometry}
-        material={materials["Material.010"]}
-        position={[0.4584, 1.24975, -0.11123]}
-        rotation={[1.42631, 0, Math.PI / 2]}
-        scale={[0.02726, 0.45404, 0.02726]}
-        userData={{ name: "Cylinder.010" }}
-      />
-      <mesh
-        name="Cylinder011"
-        castShadow
-        receiveShadow
-        geometry={nodes.Cylinder011.geometry}
-        material={materials["Material.004"]}
-        position={[0.4584, 1.24975, -0.11123]}
-        rotation={[1.42631, 0, Math.PI / 2]}
-        scale={[0.02726, 0.45404, 0.02726]}
-        userData={{ name: "Cylinder.011" }}
-      />
-      <mesh
-        name="Cylinder002"
-        castShadow
-        receiveShadow
-        geometry={nodes.Cylinder002.geometry}
-        material={materials["Material.001"]}
-        position={[-0.39034, 0.38739, 0.06169]}
-        rotation={[-0.27765, 0, 0.47708]}
-        scale={0.31619}
-        userData={{ name: "Cylinder.002" }}
-      />
-      <mesh
-        name="Cylinder004"
-        castShadow
-        receiveShadow
-        geometry={nodes.Cylinder004.geometry}
-        material={materials["Material.001"]}
-        position={[0.39318, 0.38739, 0.06169]}
-        rotation={[-0.15451, 0.23162, -0.49756]}
-        scale={0.31619}
-        userData={{ name: "Cylinder.004" }}
-      />
     </group>
   );
 }
 
-useGLTF.preload("/assets/obj/clock.glb");
+useGLTF.preload("/assets/obj/clock_joined.glb");

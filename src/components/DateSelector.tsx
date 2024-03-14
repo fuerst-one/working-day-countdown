@@ -2,10 +2,8 @@
 
 import React, { useState } from "react";
 import dayjs from "dayjs";
-import { useRouter } from "next/navigation";
 
 export const DateSelector = () => {
-  const router = useRouter();
   const [date, setDate] = useState(dayjs().startOf("day"));
   const dateFormatted = dayjs(date).format("YYYY-MM-DD");
   const isInvalid = dayjs(date).isBefore(dayjs().endOf("day"));
@@ -23,7 +21,7 @@ export const DateSelector = () => {
       <button
         id="show-countdown"
         className="py-4 px-8 bg-blue-500 text-white rounded-md disabled:cursor-not-allowed opacity-0"
-        onClick={() => router.push(`/${dateFormatted}`)}
+        onClick={() => (window.location.href = `/${dateFormatted}`)}
         disabled={isInvalid}
       >
         {isInvalid ? "Select a date" : "Show working day countdown"}

@@ -1,8 +1,14 @@
-import { ClockAnimationType } from "@/components/ClockAnimation/AlarmClock/AlarmClock";
+import { ClockAnimationType } from "@/components/ClockAnimation/AlarmClock/AlarmClockMain";
 import { ClockAnimation } from "@/components/ClockAnimation/ClockAnimation";
-import React, { useState } from "react";
+import React, { ReactNode, useState } from "react";
 
-export const HomePageAnimation = () => {
+export const HomePageAnimation = ({
+  onLoad,
+  children,
+}: {
+  onLoad: () => void;
+  children: ReactNode;
+}) => {
   const [animation, setAnimation] =
     useState<ClockAnimationType>("alarm-delayed");
 
@@ -10,6 +16,9 @@ export const HomePageAnimation = () => {
     <ClockAnimation
       animation={animation}
       onClockClick={() => setAnimation("push")}
-    />
+      onLoad={onLoad}
+    >
+      {children}
+    </ClockAnimation>
   );
 };

@@ -1,25 +1,31 @@
-import React, { Suspense } from "react";
+import React, { ReactNode, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { AlarmClock, ClockAnimationType } from "./AlarmClock/AlarmClock";
+import { ClockAnimationType } from "./AlarmClock/AlarmClockMain";
 import { Floor } from "./Floor";
 import { Background } from "./Background/Background";
-import { Html } from "@react-three/drei";
-import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing";
+import { Float, Html, OrbitControls } from "@react-three/drei";
+import { EffectComposer, Bloom, Vignette, DepthOfField, Noise } from "@react-three/postprocessing";
+import { Physics } from "@react-three/rapier";
+import { AlarmClockMain } from "./AlarmClock/AlarmClockMain";
 
 type ClockAnimationProps = {
   animation?: ClockAnimationType;
   onClockClick?: () => void;
+  onLoad?: () => void;
+  children?: ReactNode;
 };
 
 export const ClockAnimation = ({
   animation,
   onClockClick,
+  onLoad,
+  children,
 }: ClockAnimationProps) => {
   return (
-    <div id="background-animation">
+    <div id="background-animation" className="relative">
       <Canvas
         style={{ height: "100vh" }}
-        shadows
+        shadows="soft"
         camera={{
           position: [0, 0, 5],
           fov: 50,
@@ -27,47 +33,67 @@ export const ClockAnimation = ({
         gl={{
           powerPreference: "high-performance",
           alpha: false,
+          antialias: false,
           stencil: false,
           depth: false,
         }}
       >
-        <color attach="background" args={["#050505"]} />
+        <color attach="background" args={["#141414"]} />
         <fog color="#161616" attach="fog" near={8} far={30} />
-        <Suspense fallback={<Html center>Loading.</Html>}>
-          <ambientLight intensity={Math.PI * 0.9} castShadow />
-          <spotLight
-            position={[10, 10, 10]}
-            angle={0.15}
-            penumbra={1}
-            decay={0}
-            intensity={Math.PI}
-            castShadow
-          />
+        <ambientLight intensity={Math.PI} />
+        <spotLight
+          castShadow
+          position={[10, 10, 10]}
+          angle={0.15}
+          penumbra={1}
+          decay={0}
+          intensity={Math.PI * 0.8}
+        />
+        <OrbitControls />
+        <Suspense fallback={null}>
           <Background />
-          <group position={[-1, 0, 0]}>
-            <AlarmClock
-              position={[-0.5, 0, 0]}
-              rotation={[0, 0.5, 0]}
+          <Physics interpolate={false} colliders={false}>
+            <AlarmClockMain
+              position={[-1.5, 3, 0]}
               animation={animation}
               onClick={onClockClick}
-              castShadow
             />
             <Floor
-              position={[-0.8, -1, -3]}
-              rotation={[-Math.PI / 2, 0, 0]}
               receiveShadow
+              position={[-1.8, -1, -3]}
+              onAfterRender={() => {
+                onLoad?.();
+              }}
             />
-          </group>
+          </Physics>
+          <Float floatingRange={[0.1, 0.1]}>
+            <Html
+              transform
+              occlude
+              position={[0.5, 1, -3]}
+              rotation={[0, 0.2, 0]}
+              scale={.3}
+            >
+              <div className="w-[300px]">{children}</div>
+            </Html>
+          </Float>
+          <EffectComposer multisampling={0} enableNormalPass={false}>
+            <DepthOfField
+              focusDistance={0}
+              focalLength={0.02}
+              bokehScale={2}
+              height={480}
+            />
+            <Bloom
+              luminanceThreshold={0}
+              luminanceSmoothing={0.9}
+              height={300}
+              opacity={3}
+            />
+            <Noise opacity={0.025} />
+            <Vignette eskil={false} offset={0.1} darkness={1.1} />
+          </EffectComposer>
         </Suspense>
-        <EffectComposer multisampling={0}>
-          <Bloom
-            luminanceThreshold={0}
-            luminanceSmoothing={0.9}
-            height={300}
-            opacity={0.2}
-          />
-          <Vignette eskil={false} offset={0} darkness={0.1} />
-        </EffectComposer>
       </Canvas>
     </div>
   );
