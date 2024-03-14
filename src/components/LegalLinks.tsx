@@ -32,9 +32,17 @@ export const LegalLinks = ({
         <div className="mt-2">
           Thanks to{" "}
           <span>
-            <Link href="https://pmnd.rs/" className="hover:underline">Poimandres</Link>,{" "}
-            <Link href="https://gsap.org/" className="hover:underline">GSAP</Link>,{" "}
-            <Link href="https://threejs.org/" className="hover:underline">three.js</Link>
+            <Link href="https://pmnd.rs/" className="hover:underline">
+              Poimandres
+            </Link>
+            ,{" "}
+            <Link href="https://gsap.org/" className="hover:underline">
+              GSAP
+            </Link>
+            ,{" "}
+            <Link href="https://threejs.org/" className="hover:underline">
+              three.js
+            </Link>
           </span>{" "}
           and you, for making this possible.
         </div>

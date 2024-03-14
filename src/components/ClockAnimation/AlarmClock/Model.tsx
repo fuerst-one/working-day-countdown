@@ -47,10 +47,12 @@ export function Model(
   props: JSX.IntrinsicElements["group"] & {
     modelRef?: RefObject<THREE.Group>;
     material?: THREE.Material;
-  }
+  },
 ) {
   const material = props.material;
-  const { nodes, materials } = useGLTF("/assets/obj/clock_joined.glb") as GLTFResult;
+  const { nodes, materials } = useGLTF(
+    "/assets/obj/clock_joined.glb",
+  ) as GLTFResult;
   return (
     <group {...props} ref={props.modelRef} dispose={null}>
       <group name="Scene">
@@ -199,7 +201,7 @@ export function Model(
             castShadow
             receiveShadow
             geometry={nodes.Cylinder027_2.geometry}
-            material={material ?? materials["Material.004"]}
+            material={materials["Material.004"]}
           />
           <mesh
             name="Cylinder027_3"

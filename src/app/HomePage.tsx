@@ -17,19 +17,20 @@ export const HomePage = () => {
         return;
       }
       const tl = gsap.timeline();
-      tl.to("#title", { duration: 1, opacity: 1 })
+      tl.to("#animation", { duration: 1.5, opacity: 1 }, 0)
+        .to("#title", { duration: 1, opacity: 1 }, 0.25)
         .to("#date-input", { duration: 1, opacity: 1 }, "-=0.75")
         .to("#show-countdown", { duration: 1, opacity: 1 }, "-=0.75")
-        .to("#animation", { duration: 1.5, opacity: 1 }, 0)
+        .to("#legal-links", { duration: 1, opacity: 1 }, "-=0.75");
     },
-    [isLoaded]
+    [isLoaded],
   );
 
   return (
     <main ref={containerRef} className="relative min-h-screen ">
       <div id="animation" className="absolute inset-0 z-0 opacity-0">
         <HomePageAnimation onLoad={() => setIsLoaded(true)}>
-          <div className="flex flex-col items-center justify-center gap-8 w-[400px]">
+          <div className="flex flex-col items-center justify-center gap-8 w-[400px] p-8 bg-[#151515]">
             <h1
               id="title"
               className="mt-auto text-6xl font-bold z-10 opacity-25 text-center"
@@ -42,7 +43,7 @@ export const HomePage = () => {
             <div id="date-selector" className="flex flex-col gap-4 z-10">
               <DateSelector />
             </div>
-            <div id="legal-links" className="mt-auto mb-0 z-10">
+            <div id="legal-links" className="mt-auto mb-0 z-10 opacity-0">
               <LegalLinks />
             </div>
           </div>

@@ -29,7 +29,7 @@ export const DetailPage = ({ date }: { date: string }) => {
       () => {
         window.location.reload();
       },
-      1000 * 60 * 60
+      1000 * 60 * 60,
     ); // every hour
     return () => clearTimeout(timeout);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -42,14 +42,14 @@ export const DetailPage = ({ date }: { date: string }) => {
         return;
       }
       const tl = gsap.timeline();
-      tl.to("#title", { duration: 1, opacity: 1 })
-        .to("#date", { duration: 1, opacity: 1 }, 0.25)
-        .to("#units", { duration: 1, opacity: 1 }, 0.25)
-        .to("#excluding", { duration: 1, opacity: 1 }, 0.25)
-        .to("#copy-button", { duration: 1, opacity: 1 }, 0.25)
-        .to("#animation", { duration: 1, opacity: 1 }, 0.25);
+      tl.to("#animation", { duration: 1, opacity: 1 }, 0)
+        .to("#title", { duration: 1, opacity: 1 }, 0.25)
+        .to("#date", { duration: 1, opacity: 1 }, "-=0.75")
+        .to("#units", { duration: 1, opacity: 1 }, "-=0.75")
+        .to("#copy-button", { duration: 1, opacity: 1 }, "-=0.75")
+        .to("#legal-links", { duration: 1, opacity: 1 }, "-=0.75");
     },
-    [isLoaded]
+    [isLoaded],
   );
 
   if (workingDaysLeft === 0) {
@@ -59,10 +59,7 @@ export const DetailPage = ({ date }: { date: string }) => {
         className="relative flex min-h-screen flex-col items-center justify-center gap-8 p-24"
       >
         <div id="animation" className="absolute inset-0 z-0 opacity-0">
-          <DetailPageAnimation
-            isIdle={false}
-            onLoad={() => setIsLoaded(true)}
-          >
+          <DetailPageAnimation isIdle={false} onLoad={() => setIsLoaded(true)}>
             <div className="flex flex-col items-center justify-center gap-8 w-[400px]">
               <h1 className="text-6xl font-bold z-10">You made it</h1>
               <p className="text-2xl z-10">
@@ -83,7 +80,7 @@ export const DetailPage = ({ date }: { date: string }) => {
     >
       <div id="animation" className="absolute inset-0 z-0 opacity-0">
         <DetailPageAnimation isIdle={true} onLoad={() => setIsLoaded(true)}>
-          <div className="flex flex-col items-center justify-center gap-8 w-[400px]">
+          <div className="flex flex-col items-center justify-center gap-8 w-[400px] p-8 bg-[#151515]">
             <h1
               id="title"
               className="mt-auto text-6xl font-bold z-10 opacity-0  text-center"
@@ -91,16 +88,15 @@ export const DetailPage = ({ date }: { date: string }) => {
               {workingDaysLeft} working days left
             </h1>
             {!isLoaded && <p>Loading...</p>}
-            <p id="date" className="text-2xl z-10 opacity-0">
+            <p id="date" className="text-2xl text-center z-10 opacity-0">
               until {targetDate.toDate().toLocaleDateString()}
+              <br />
+              <span className="text-sm text-gray-500">(excluding today)</span>
             </p>
             <p id="units" className="text-2xl z-10 opacity-0">
               = {workingDaysLeft * 8} working hours
               <br />= {workingDaysLeft * 8 * 60} minutes
               <br />= {workingDaysLeft * 8 * 60 * 60} seconds
-            </p>
-            <p id="excluding" className="text-sm text-gray-500 z-10 opacity-0">
-              (excluding today)
             </p>
             <button
               id="copy-button"
@@ -111,7 +107,9 @@ export const DetailPage = ({ date }: { date: string }) => {
             >
               Copy link
             </button>
-            <LegalLinks className="mt-auto mb-0 z-10" />
+            <div id="legal-links" className="opacity-0">
+              <LegalLinks className="mt-auto mb-0 z-10" />
+            </div>
           </div>
         </DetailPageAnimation>
       </div>

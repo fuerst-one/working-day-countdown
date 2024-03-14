@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import React, { useState } from "react";
 import { useFrame } from "@react-three/fiber";
-import { AlarmClock } from "../AlarmClock/AlarmClock";
+import { AlarmClock } from "./AlarmClock/AlarmClock";
 
 const Instances = () => {
   // we use this array ref to store the objects after creating them
@@ -47,7 +47,5 @@ const Instances = () => {
 };
 
 export const Background = () => {
-  return (
-    <Instances />
-  );
+  return <Instances />;
 };
