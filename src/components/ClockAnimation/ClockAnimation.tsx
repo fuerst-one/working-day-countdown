@@ -1,12 +1,6 @@
-import React, {
-  ReactNode,
-  Suspense,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { ReactNode, Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { CylinderCollider, Physics } from "@react-three/rapier";
+import { Physics } from "@react-three/rapier";
 import {
   OrbitControls,
   Environment,
@@ -28,43 +22,17 @@ import { Display } from "./Display";
 
 type ClockAnimationProps = {
   animation?: ClockAnimationType;
-  onClockClick?: () => void;
   onLoad?: () => void;
+  onClockClick?: () => void;
   children?: ReactNode;
 };
 
 export const ClockAnimation = ({
   animation,
-  onClockClick,
   onLoad,
+  onClockClick,
   children,
 }: ClockAnimationProps) => {
-  const [showClock, setShowClock] = useState(true);
-
-  const respawnClock = () => {
-    if (!showClock) {
-      return;
-    }
-    setShowClock(false);
-  };
-
-  useEffect(() => {
-    if (showClock) {
-      return;
-    }
-    const timeout = setTimeout(() => setShowClock(true), 500);
-    return () => clearTimeout(timeout);
-  }, [showClock]);
-
-  const initialRotiation = useMemo(() => {
-    return [
-      Math.random() * Math.PI * 2,
-      Math.random() * Math.PI * 2,
-      Math.random() * Math.PI * 2,
-    ] as [number, number, number];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showClock]);
-
   return (
     <div id="background-animation" className="relative">
       <Canvas
@@ -109,14 +77,11 @@ export const ClockAnimation = ({
             interpolate={false}
             colliders={false}
           >
-            {showClock && (
-              <AlarmClockMain
-                position={[-1.8, 5, -2]}
-                rotation={initialRotiation}
-                animation={animation}
-                onClick={onClockClick}
-              />
-            )}
+            <AlarmClockMain
+              position={[-1.8, 5, -2]}
+              animation={animation}
+              onClick={onClockClick}
+            />
             <Display
               position={[0.5, 0.4, -3]}
               rotation={[0, -0.2, 0]}
@@ -125,12 +90,6 @@ export const ClockAnimation = ({
               {children}
             </Display>
             <Stage receiveShadow position={[-1.8, -2, -3]} />
-            <CylinderCollider
-              sensor
-              args={[0.1, 500]}
-              position={[0, -5, 0]}
-              onIntersectionEnter={respawnClock}
-            />
           </Physics>
           <Environment resolution={256}>
             <Lightformer
