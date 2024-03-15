@@ -1,9 +1,12 @@
-import React, { ReactNode, Suspense } from "react";
+import React, { ReactNode, Suspense, useEffect, useState } from "react";
 import { Canvas } from "@react-three/fiber";
-import { ClockAnimationType } from "./AlarmClock/AlarmClockMain";
-import { Floor } from "./Floor";
-import { Background } from "./Background";
-import { OrbitControls } from "@react-three/drei";
+import { CylinderCollider, Physics } from "@react-three/rapier";
+import {
+  OrbitControls,
+  Environment,
+  Lightformer,
+  Text,
+} from "@react-three/drei";
 import {
   EffectComposer,
   Bloom,
@@ -11,8 +14,10 @@ import {
   DepthOfField,
   Noise,
 } from "@react-three/postprocessing";
-import { Physics } from "@react-three/rapier";
 import { AlarmClockMain } from "./AlarmClock/AlarmClockMain";
+import { ClockAnimationType } from "./AlarmClock/AlarmClockMain";
+import { Background } from "./Background";
+import { Stage } from "./Stage";
 import { Display } from "./Display";
 
 type ClockAnimationProps = {
@@ -28,6 +33,23 @@ export const ClockAnimation = ({
   onLoad,
   children,
 }: ClockAnimationProps) => {
+  const [showClock, setShowClock] = useState(true);
+
+  const respawnClock = () => {
+    if (!showClock) {
+      return;
+    }
+    setShowClock(false);
+  };
+
+  useEffect(() => {
+    if (showClock) {
+      return;
+    }
+    const timeout = setTimeout(() => setShowClock(true), 3000);
+    return () => clearTimeout(timeout);
+  }, [showClock]);
+
   return (
     <div id="background-animation" className="relative">
       <Canvas
@@ -58,29 +80,54 @@ export const ClockAnimation = ({
           intensity={5}
         />
         <OrbitControls />
-        <Suspense fallback={null}>
+        <Suspense
+          fallback={
+            <Text position={[0, 0, 0]} color="white">
+              Loading Stage...
+            </Text>
+          }
+        >
           <Background />
-          <Physics gravity={[0, -4.8, 0]} interpolate={false} colliders={false}>
-            <AlarmClockMain
-              position={[-1.5, 1, 0]}
-              rotation={[0.13, 0.05, 0]}
-              animation={animation}
-              onClick={onClockClick}
-            />
-            <Display position={[0.5, 0.4, -3]} rotation={[0, -0.2, 0]}>
+          <Physics
+            /* gravity={[0, -4.8, 0]} */
+            interpolate={false}
+            colliders={false}
+          >
+            {showClock && (
+              <AlarmClockMain
+                position={[-1.8, 3, -2]}
+                rotation={[0.13, 0.05, 0]}
+                animation={animation}
+                onClick={onClockClick}
+              />
+            )}
+            <Display
+              position={[0.5, 0.4, -3]}
+              rotation={[0, -0.2, 0]}
+              onLoad={onLoad}
+            >
               {children}
             </Display>
-            <Floor
-              onAfterRender={onLoad}
-              receiveShadow
-              position={[-1.8, -2, -3]}
+            <Stage receiveShadow position={[-1.8, -2, -3]} />
+            <CylinderCollider
+              sensor
+              args={[0.1, 500]}
+              position={[0, -8, 0]}
+              onIntersectionEnter={respawnClock}
             />
           </Physics>
-          <EffectComposer multisampling={0} enableNormalPass={false}>
+          <Environment resolution={256}>
+            <Lightformer
+              intensity={0.5}
+              position={[0, 0, 0]}
+              rotation={[0, 0, 0]}
+            />
+          </Environment>
+          <EffectComposer multisampling={0}>
             <DepthOfField
               target={[0, 0, -3]}
-              focalLength={0.03}
-              bokehScale={14}
+              focalLength={0.05}
+              bokehScale={10}
               height={700}
             />
             <Bloom

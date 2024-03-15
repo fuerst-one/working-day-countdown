@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { RefObject, useState } from "react";
 import { Model } from "./Model";
 import {
   useTexture,
@@ -7,7 +7,10 @@ import {
 } from "@react-three/drei";
 import * as THREE from "three";
 
-export const AlarmClock = (props: JSX.IntrinsicElements["group"]) => {
+export const AlarmClock = ({
+  modelRef,
+  ...props
+}: JSX.IntrinsicElements["group"] & { modelRef?: RefObject<THREE.Group> }) => {
   const bumpMap = useTexture("/assets/obj/bump.jpg");
   const envMap = useCubeTexture(
     ["px.png", "nx.png", "py.png", "ny.png", "pz.png", "nz.png"],
@@ -15,6 +18,7 @@ export const AlarmClock = (props: JSX.IntrinsicElements["group"]) => {
   );
 
   // We use `useResource` to be able to delay rendering the spheres until the material is ready
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [material, set] = useState<any>(null);
 
   return (
@@ -34,6 +38,7 @@ export const AlarmClock = (props: JSX.IntrinsicElements["group"]) => {
       />
       <group {...props}>
         <Model
+          modelRef={modelRef}
           position={[0, -0.8, -0.2]}
           receiveShadow
           castShadow

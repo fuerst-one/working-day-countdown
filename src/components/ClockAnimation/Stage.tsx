@@ -3,7 +3,7 @@ import React from "react";
 import { Cylinder } from "@react-three/drei";
 import * as THREE from "three";
 
-export const Floor = (props: JSX.IntrinsicElements["mesh"]) => {
+export const Stage = (props: JSX.IntrinsicElements["mesh"]) => {
   return (
     <RigidBody type="fixed" colliders="hull">
       <Cylinder {...props} args={[4, 4, 0.3, 90]} castShadow receiveShadow>

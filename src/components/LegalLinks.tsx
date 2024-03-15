@@ -7,8 +7,8 @@ export const LegalLinks = ({
 }: ComponentPropsWithRef<"div">) => {
   return (
     <div {...props} className={className}>
-      <div className="text-xs font-medium text-gray-200 text-center">
-        <div className="flex items-center justify-center gap-2 flex-wrap">
+      <div className="text-center text-xs font-medium text-gray-200">
+        <div className="flex flex-wrap items-center justify-center gap-2">
           <Link href="https://fuerst.one" className="hover:underline">
             &copy; {new Date().getFullYear()} https://fuerst.one
           </Link>

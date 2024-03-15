@@ -1,16 +1,17 @@
 import { Box, Html } from "@react-three/drei";
 import { RapierRigidBody, RigidBody } from "@react-three/rapier";
-import React, { FC, ReactNode, useRef } from "react";
+import React, { FC, ReactNode, useEffect, useRef } from "react";
 import { useFrame } from "react-three-fiber";
 
 type DisplayProps = JSX.IntrinsicElements["group"] & {
+  onLoad?: () => void;
   children?: ReactNode;
 };
 
-export const Display: FC<DisplayProps> = ({ children, ...props }) => {
+export const Display: FC<DisplayProps> = ({ onLoad, children, ...props }) => {
   const rigidBodyRef = useRef<RapierRigidBody>(null);
-  
-  useFrame(({clock, mouse}) => {
+
+  useFrame(({ clock, mouse }) => {
     const rigidBody = rigidBodyRef.current;
     if (!rigidBody) {
       return;
@@ -43,9 +44,22 @@ export const Display: FC<DisplayProps> = ({ children, ...props }) => {
           occlude="blending"
           scale={0.25}
         >
-          {children}
+          <DisplayContent onLoad={onLoad}>{children}</DisplayContent>
         </Html>
       </group>
     </RigidBody>
   );
+};
+
+const DisplayContent = ({
+  onLoad,
+  children,
+}: {
+  onLoad?: () => void;
+  children: ReactNode;
+}) => {
+  useEffect(() => {
+    onLoad?.();
+  }, [onLoad]);
+  return <div className="h-[610px] w-[410px] bg-[#1b1b1b] p-4">{children}</div>;
 };
