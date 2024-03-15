@@ -1,4 +1,10 @@
-import React, { ReactNode, Suspense, useEffect, useState } from "react";
+import React, {
+  ReactNode,
+  Suspense,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { Canvas } from "@react-three/fiber";
 import { CylinderCollider, Physics } from "@react-three/rapier";
 import {
@@ -50,6 +56,15 @@ export const ClockAnimation = ({
     return () => clearTimeout(timeout);
   }, [showClock]);
 
+  const initialRotiation = useMemo(() => {
+    return [
+      Math.random() * Math.PI * 2,
+      Math.random() * Math.PI * 2,
+      Math.random() * Math.PI * 2,
+    ] as [number, number, number];
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showClock]);
+
   return (
     <div id="background-animation" className="relative">
       <Canvas
@@ -90,13 +105,14 @@ export const ClockAnimation = ({
           <Background />
           <Physics
             /* gravity={[0, -4.8, 0]} */
+            timeStep={1 / 60}
             interpolate={false}
             colliders={false}
           >
             {showClock && (
               <AlarmClockMain
-                position={[-1.8, 3, -2]}
-                rotation={[0.13, 0.05, 0]}
+                position={[-1.8, 5, -2]}
+                rotation={initialRotiation}
                 animation={animation}
                 onClick={onClockClick}
               />
