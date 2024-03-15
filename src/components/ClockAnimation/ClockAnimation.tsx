@@ -46,7 +46,7 @@ export const ClockAnimation = ({
     if (showClock) {
       return;
     }
-    const timeout = setTimeout(() => setShowClock(true), 3000);
+    const timeout = setTimeout(() => setShowClock(true), 500);
     return () => clearTimeout(timeout);
   }, [showClock]);
 
@@ -82,7 +82,7 @@ export const ClockAnimation = ({
         <OrbitControls />
         <Suspense
           fallback={
-            <Text position={[0, 0, 0]} color="white">
+            <Text position={[0, 0, -10]} color="white">
               Loading Stage...
             </Text>
           }
@@ -112,7 +112,7 @@ export const ClockAnimation = ({
             <CylinderCollider
               sensor
               args={[0.1, 500]}
-              position={[0, -8, 0]}
+              position={[0, -5, 0]}
               onIntersectionEnter={respawnClock}
             />
           </Physics>
