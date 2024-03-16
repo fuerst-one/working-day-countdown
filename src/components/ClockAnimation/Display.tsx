@@ -11,7 +11,7 @@ type DisplayProps = JSX.IntrinsicElements["group"] & {
 export const Display: FC<DisplayProps> = ({ onLoad, children, ...props }) => {
   const rigidBodyRef = useRef<RapierRigidBody>(null);
 
-  useFrame(({ clock, mouse }) => {
+  useFrame(({ clock, pointer }) => {
     const rigidBody = rigidBodyRef.current;
     if (!rigidBody) {
       return;
@@ -21,9 +21,9 @@ export const Display: FC<DisplayProps> = ({ onLoad, children, ...props }) => {
     const y = Math.cos(time) * 0.1;
     rigidBody.setTranslation({ x, y, z: 0 }, false);
 
-    const { x: mouseX, y: mouseY } = mouse;
-    const xForce = (mouseX - x) * 10;
-    const yForce = (mouseY - y) * 10;
+    const { x: pointerX, y: pointerY } = pointer;
+    const xForce = (pointerX - x) * 10;
+    const yForce = (pointerY - y) * 10;
     rigidBody.applyImpulse({ x: xForce, y: yForce, z: 0 }, true);
 
     const { x: xVel, y: yVel } = rigidBody.linvel();

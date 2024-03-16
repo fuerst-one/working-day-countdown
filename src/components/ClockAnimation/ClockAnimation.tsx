@@ -1,4 +1,4 @@
-import React, { ReactNode, Suspense } from "react";
+import React, { ReactNode, Suspense, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/rapier";
 import {
@@ -33,9 +33,18 @@ export const ClockAnimation = ({
   onClockClick,
   children,
 }: ClockAnimationProps) => {
+  const [ref, setRef] = useState<HTMLDivElement | null>(null);
+  const [isPointerBusy, setIsPointerBusy] = useState(false);
+
   return (
-    <div id="background-animation" className="relative">
+    <div
+      ref={(ref) => setRef(ref)}
+      id="background-animation"
+      className="relative"
+    >
       <Canvas
+        eventSource={ref!}
+        eventPrefix="client"
         style={{ height: "100vh" }}
         shadows
         camera={{
@@ -62,7 +71,7 @@ export const ClockAnimation = ({
           decay={0}
           intensity={5}
         />
-        <OrbitControls />
+        <OrbitControls enabled={!isPointerBusy} />
         <Suspense
           fallback={
             <Text position={[0, 0, -10]} color="white">
@@ -71,16 +80,13 @@ export const ClockAnimation = ({
           }
         >
           <Background />
-          <Physics
-            /* gravity={[0, -4.8, 0]} */
-            timeStep={1 / 60}
-            interpolate={false}
-            colliders={false}
-          >
+          <Physics colliders={false}>
             <AlarmClockMain
               position={[-1.8, 5, -2]}
               animation={animation}
               onClick={onClockClick}
+              onPointerDown={() => setIsPointerBusy(true)}
+              onPointerUp={() => setIsPointerBusy(false)}
             />
             <Display
               position={[0.5, 0.4, -3]}
